@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigiKecil - Edukasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-tooth"></i>
+                <h2>GigiKecil</h2>
+            </div>
+
+            <nav class="menu">
+                <a href="#" class="menu-item">
+                    <i class="fa-solid fa-house"></i> Dashboard
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fa-solid fa-notes-medical"></i> Catatan gigi
+                </a>
+                <a href="#" class="menu-item active">
+                    <i class="fa-solid fa-book-open"></i> Edukasi
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fa-solid fa-phone"></i> Direktori Klinik
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fa-regular fa-bell"></i> Notifikasi
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fa-solid fa-gear"></i> Pengaturan
+                </a>
+            </nav>
+
+            <div class="logout">
+                <a href="#" class="menu-item">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1>Edukasi Kesehatan Gigi</h1>
+                    <p>Artikel dan tips edukatif untuk kesehatan gigi anak</p>
+                </div>
+            </header>
+
+            <!-- FILTER TABS -->
+            <section class="filters">
+                <!-- PERUBAHAN 1: Menambahkan atribut data-filter -->
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fa-solid fa-book"></i> Semua
+                </button>
+                <button class="filter-btn" data-filter="perawatan">
+                    <i class="fa-regular fa-heart"></i> Perawatan
+                </button>
+                <button class="filter-btn" data-filter="nutrisi">
+                    <i class="fa-solid fa-apple-whole"></i> Nutrisi
+                </button>
+                <button class="filter-btn" data-filter="tips">
+                    <i class="fa-regular fa-star"></i> Tips
+                </button>
+            </section>
+
+            <!-- ARTICLES SECTION -->
+            <section class="articles">
+                <h3>Artikel Pilihan</h3>
+                
+                <div class="cards-grid" id="cardsContainer">
+                    <!-- PERUBAHAN 2: Menambahkan atribut data-category pada setiap card -->
+                    
+                    <!-- Card 1: Kategori Perawatan -->
+                    <article class="card" data-category="perawatan">
+                        <div class="card-image">
+                            <span class="badge blue">Perawatan</span>
+                            <img src="jagaanak.jpeg">
+                        </div>
+                        <div class="card-body">
+                            <h4>Cara Menyikat Gigi Anak dengan Benar</h4>
+                            <p>Teknik menyikat gigi yang tepat untuk anak usia 2-12 tahun. Pelajari langkah-langkah dan tips agar anak mau sikat gigi dengan rutin.</p>
+                            <div class="card-footer">
+                                <span class="time"><i class="fa-regular fa-clock"></i> 5 menit</span>
+                                <a href="#" class="read-more">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Kategori Tips -->
+                    <article class="card" data-category="tips">
+                        <div class="card-image">
+                            <span class="badge blue">Tips</span>
+                            <img src="makanan.webp">
+                        </div>
+                        <div class="card-body">
+                            <h4>Makanan Terbaik untuk Kesehatan Gigi Anak</h4>
+                            <p>Daftar makanan yang baik dan buruk untuk gigi anak. Ketahui nutrisi penting untuk pertumbuhan gigi yang sehat.</p>
+                            <div class="card-footer">
+                                <span class="time"><i class="fa-regular fa-clock"></i> 7 menit</span>
+                                <a href="#" class="read-more">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Kategori Nutrisi (Tambahan untuk tes filter) -->
+                    <article class="card" data-category="nutrisi">
+                        <div class="card-image">
+                            <span class="badge blue">Nutrisi</span>
+                            <img src="vitamingigi.jpg">
+                        </div>
+                        <div class="card-body">
+                            <h4>Vitamin Penting untuk Gigi Kuat</h4>
+                            <p>Kalsium dan Vitamin D sangat penting untuk pertumbuhan gigi anak. Temukan sumber alaminya di sini.</p>
+                            <div class="card-footer">
+                                <span class="time"><i class="fa-regular fa-clock"></i> 4 menit</span>
+                                <a href="#" class="read-more">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
