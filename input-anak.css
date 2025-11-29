@@ -1,0 +1,154 @@
+/* ============
+   RESET
+=============*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ============
+   PAGE WRAPPER
+=============*/
+body {
+    background: #f4f9ff;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* ============
+   FORM CONTAINER
+=============*/
+.form-container {
+    background: #ffffff;
+    width: 420px;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.form-container h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #1e293b;
+}
+
+/* ============
+   FORM GROUP
+=============*/
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+input, select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+    background: #f8fafc;
+}
+
+input:focus,
+select:focus {
+    border-color: #3b82f6;
+    background: #ffffff;
+}
+
+/* ============
+   BUTTON
+=============*/
+button {
+    width: 100%;
+    padding: 12px;
+    background: #3b82f6;
+    border: none;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+/* ============
+   TOOTH MAP WRAPPER
+=============*/
+.tooth-wrapper {
+    margin-top: 25px;
+}
+
+.tooth-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+/* ============
+   TOOTH ICONS (KOTAK TITIK)
+=============*/
+.tooth-map {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.tooth {
+    width: 60px;
+    height: 60px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s;
+}
+
+.tooth:hover {
+    background: #cbd5e1;
+}
+
+.tooth.active {
+    background: #60a5fa !important;
+    color: white;
+}
+
+.tooth span {
+    font-size: 13px;
+    color: #334155;
+}
+
+/* Tooltip */
+.tooth:hover::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #475569;
+    color: #fff;
+    padding: 3px 8px;
+    font-size: 11px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
