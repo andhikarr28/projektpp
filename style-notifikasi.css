@@ -69,6 +69,7 @@
         }
         .icon-pink { background-color: #FFE4E6; color: #E11D48; }
         .icon-yellow { background-color: #FEF9C3; color: #CA8A04; }
+        .icon-blue { background-color: #E0F2FE; color: #0284C7; }
 
         /* Konten Teks */
         .notif-body { flex-grow: 1; }

@@ -53,7 +53,7 @@
                         <span>Perhatian</span>
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
-                    <div class="notif-card-value">1</div>
+                    <div class="notif-card-value" id="alertCount">0</div>
                 </div>
 
                 <div class="notif-card card-yellow">
@@ -61,7 +61,7 @@
                         <span>Pengingat</span>
                         <i class="fa-regular fa-clock"></i>
                     </div>
-                    <div class="notif-card-value">1</div>
+                    <div class="notif-card-value" id="warningCount">0</div>
                 </div>
 
                 <div class="notif-card card-blue">
@@ -69,7 +69,7 @@
                         <span>Info</span>
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
-                    <div class="notif-card-value">0</div>
+                    <div class="notif-card-value" id="infoCount">0</div>
                 </div>
 
                 <div class="notif-card card-grey">
@@ -77,48 +77,17 @@
                         <span>Belum dibaca</span>
                         <i class="fa-regular fa-bell"></i>
                     </div>
-                    <div class="notif-card-value">2</div>
+                    <div class="notif-card-value" id="unreadCount">0</div>
                 </div>
             </section>
 
-            <section class="notification-list-section">
-                
-                <div class="notif-item">
-                    <div class="notif-icon-box icon-pink">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </div>
-                    <div class="notif-body">
-                        <div class="notif-top">
-                            <h3 class="notif-title">Perhatian: Gigi Terlambat Tumbuh</h3>
-                            <span class="notif-time">2 jam yang lalu</span>
-                        </div>
-                        <p class="notif-desc">Gigi samping kiri (bawah) Aisyah belum tumbuh di usia yang seharusnya. Pertimbangkan untuk konsultasi dengan dokter gigi.</p>
-                        <div class="notif-actions">
-                            <button class="btn btn-primary">Konsultasi</button>
-                            <button class="btn btn-outline" onclick="tandaiDibaca(this)">Tandai sudah dibaca</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="notif-item">
-                    <div class="notif-icon-box icon-yellow">
-                        <i class="fa-regular fa-clock"></i>
-                    </div>
-                    <div class="notif-body">
-                        <div class="notif-top">
-                            <h3 class="notif-title">Waktu Sikat Gigi Malam</h3>
-                            <span class="notif-time">1 hari yang lalu</span>
-                        </div>
-                        <p class="notif-desc">Jangan lupa sikat gigi malam Salma sebelum tidur!</p>
-                        <div class="notif-actions">
-                            <button class="btn btn-outline" onclick="tandaiDibaca(this)">Tandai sudah dibaca</button>
-                        </div>
-                    </div>
-                </div>
-
+            <section class="notification-list-section" id="notificationList">
+                <!-- Dynamic notifications will be rendered here -->
             </section>
         </main>
     </div>
 
+    <script src="teeth-tracker.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
