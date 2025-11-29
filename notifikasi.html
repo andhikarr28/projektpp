@@ -48,7 +48,7 @@
             </header>
 
             <section class="notif-summary-grid">
-                <div class="notif-card card-pink">
+                <div class="notif-card card-pink" role="button" tabindex="0" data-category="alert">
                     <div class="notif-card-header">
                         <span>Perhatian</span>
                         <i class="fa-solid fa-triangle-exclamation"></i>
@@ -56,7 +56,7 @@
                     <div class="notif-card-value" id="alertCount">0</div>
                 </div>
 
-                <div class="notif-card card-yellow">
+                <div class="notif-card card-yellow" role="button" tabindex="0" data-category="reminder">
                     <div class="notif-card-header">
                         <span>Pengingat</span>
                         <i class="fa-regular fa-clock"></i>
@@ -64,7 +64,7 @@
                     <div class="notif-card-value" id="warningCount">0</div>
                 </div>
 
-                <div class="notif-card card-blue">
+                <div class="notif-card card-blue" role="button" tabindex="0" data-category="info">
                     <div class="notif-card-header">
                         <span>Info</span>
                         <i class="fa-solid fa-circle-info"></i>
@@ -72,18 +72,56 @@
                     <div class="notif-card-value" id="infoCount">0</div>
                 </div>
 
-                <div class="notif-card card-grey">
+                <div class="notif-card card-grey" role="button" tabindex="0" data-category="unread">
                     <div class="notif-card-header">
                         <span>Belum dibaca</span>
                         <i class="fa-regular fa-bell"></i>
                     </div>
                     <div class="notif-card-value" id="unreadCount">0</div>
                 </div>
+
+                <div class="notif-card card-grey" role="button" tabindex="0" data-category="history">
+                    <div class="notif-card-header">
+                        <span>Histori</span>
+                        <i class="fa-solid fa-history"></i>
+                    </div>
+                    <div class="notif-card-value" id="historyCount">0</div>
+                </div>
             </section>
 
             <section class="notification-list-section" id="notificationList">
                 <!-- Dynamic notifications will be rendered here -->
             </section>
+
+            <!-- Category Details Panel -->
+            <aside id="categoryPanel" class="category-panel" aria-hidden="true">
+                <div class="category-panel-inner">
+                    <header class="category-panel-header">
+                        <h3 id="categoryPanelTitle">Detail</h3>
+                        <button id="categoryPanelClose" class="btn btn-outline" aria-label="Tutup">Tutup</button>
+                    </header>
+                    <div id="categoryPanelList" class="category-panel-list">
+                        <!-- Filtered notifications will appear here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Modal for teeth status input -->
+            <div id="notificationModal" class="modal-overlay" aria-hidden="true">
+                <div class="modal-content">
+                    <header class="modal-header">
+                        <h3 id="modalTitle">Cek Status Gigi</h3>
+                        <button id="modalClose" class="modal-close-btn" aria-label="Tutup">&times;</button>
+                    </header>
+                    <div class="modal-body">
+                        <p id="modalQuestion">Apakah terlihat benih gigi tetap di belakang gusi?</p>
+                        <div class="modal-actions">
+                            <button id="modalYesBtn" class="btn btn-primary">YA (Ada)</button>
+                            <button id="modalNoBtn" class="btn btn-outline">TIDAK (Belum)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 

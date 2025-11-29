@@ -4,32 +4,45 @@
         /* Grid Kartu Atas */
         .notif-summary-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
             margin-bottom: 40px;
         }
 
         .notif-card {
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 120px;
+            min-height: 100px;
             border: 1px solid transparent; /* Supaya rapi */
+        }
+
+        /* Make cards look clickable */
+        .notif-card[role="button"] {
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+        .notif-card[role="button"]:hover,
+        .notif-card[role="button"]:focus {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            outline: none;
         }
 
         .notif-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .notif-card-value {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 600;
         }
 
@@ -70,9 +83,37 @@
         .icon-pink { background-color: #FFE4E6; color: #E11D48; }
         .icon-yellow { background-color: #FEF9C3; color: #CA8A04; }
         .icon-blue { background-color: #E0F2FE; color: #0284C7; }
+        .icon-green { background-color: #DCFCE7; color: #16A34A; }
 
         /* Konten Teks */
         .notif-body { flex-grow: 1; }
+
+/* Category details panel (right side drawer) */
+.category-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 420px;
+    max-width: 95%;
+    background: #fff;
+    border-left: 1px solid #e6eefc;
+    box-shadow: -8px 0 30px rgba(30,41,59,0.06);
+    transform: translateX(110%);
+    transition: transform 0.25s ease;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+}
+.category-panel[aria-hidden="false"] { transform: translateX(0%); }
+.category-panel-inner { padding: 20px; display: flex; flex-direction: column; height: 100%; }
+.category-panel-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.category-panel-list { overflow:auto; flex:1; display:flex; flex-direction:column; gap:12px; padding-bottom:20px; }
+.category-panel .notif-item { margin:0; }
+
+@media (max-width:600px) {
+    .category-panel { width: 100%; }
+}
         
         .notif-top {
             display: flex;
@@ -117,6 +158,100 @@
             cursor: default !important;
         }
 
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    max-width: 450px;
+    width: 90%;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-dark);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#modalQuestion {
+    font-size: 15px;
+    color: var(--text-grey);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
         /* Responsive HP */
         @media (max-width: 768px) {
             .dashboard-layout { flex-direction: column; }
@@ -130,7 +265,7 @@
             .sidebar-footer { display: none; }
             
             .dashboard-content { margin-left: 0; width: 100%; padding: 20px; }
-            .notif-summary-grid { grid-template-columns: 1fr 1fr; } /* 2 Kolom di HP */
+            .notif-summary-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 2 Kolom di HP */
             .notif-item { flex-direction: column; }
             .notif-actions { width: 100%; }
             .btn { flex: 1; }

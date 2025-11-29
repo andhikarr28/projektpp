@@ -146,6 +146,47 @@ function generateNotifications(childId = 1) {
 
     if (!refData) return;
 
+    // Check if user sudah input (user_checked = true)
+    if (teethStatus.user_checked === true) {
+      // User sudah check dan bilang tidak ada benih tetap
+      // Tampilkan pesan "aman ditunggu" sampai check_date
+      const checkDate = new Date(teethStatus.check_date);
+      const today = new Date();
+      const daysDiff = Math.ceil((checkDate - today) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff > 0) {
+        // Masih dalam periode aman
+        notifications.push({
+          id: teethId,
+          childName: child.name,
+          teethName: refData.nama,
+          position: teethId.startsWith('A') ? 'Atas' : 'Bawah',
+          status: 'AMAN DITUNGGU',
+          color: 'info-green',
+          icon: 'fa-check',
+          message: `Aman ditunggu sampai ${checkDate.toLocaleDateString('id-ID')}. Dorong anak menggoyangkan gigi.`,
+          time: getRandomTime()
+        });
+      } else {
+        // Check date sudah lewat, ubah menjadi TERLAMBAT lagi
+        const statusResult = cekStatusGigi(umurAnak, refData, { ...teethStatus, user_checked: false });
+        if (statusResult.status !== "SELESAI" && statusResult.status !== "BELUM WAKTUNYA") {
+          notifications.push({
+            id: teethId,
+            childName: child.name,
+            teethName: refData.nama,
+            position: teethId.startsWith('A') ? 'Atas' : 'Bawah',
+            status: statusResult.status,
+            color: statusResult.color,
+            icon: statusResult.icon,
+            message: statusResult.message,
+            time: getRandomTime()
+          });
+        }
+      }
+      return;
+    }
+
     const statusResult = cekStatusGigi(umurAnak, refData, teethStatus);
 
     // Only add critical and warning notifications
@@ -187,17 +228,24 @@ function getNotificationCounts() {
     ...generateNotifications(2)
   ];
 
+  const readNotifications = JSON.parse(localStorage.getItem('readNotifications')) || [];
+
   const counts = {
     alert: 0,
     warning: 0,
     info: 0,
-    unread: 0
+    unread: 0,
+    history: 0
   };
 
   allNotifications.forEach(notif => {
-    if (notif.status === "ALERT") counts.alert++;
-    else if (notif.status === "TERLAMBAT COPOT" || notif.status === "PERIODE GOYANG") counts.warning++;
-    else counts.info++;
+    if (readNotifications.includes(notif.id)) {
+      counts.history++;
+    } else {
+      if (notif.status === "ALERT") counts.alert++;
+      else if (notif.status === "TERLAMBAT COPOT" || notif.status === "PERIODE GOYANG") counts.warning++;
+      else counts.info++;
+    }
   });
 
   counts.unread = counts.alert + counts.warning;
