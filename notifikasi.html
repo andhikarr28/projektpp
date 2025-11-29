@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifikasi - GigiKecil</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-notifikasi.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        
+        <aside class="sidebar">
+            <a href="#" class="sidebar-logo">
+                <i class="fa-solid fa-tooth"></i> GigiKecil
+            </a>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-file-medical"></i> Catatan gigi</a></li>
+                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-book-open"></i> Edukasi</a></li>
+                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-phone"></i> Direktori Klinik</a></li>
+                    
+                    <li><a href="#" class="sidebar-link active"><i class="fa-solid fa-bell"></i> Notifikasi</a></li>
+                    
+                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-gear"></i> Pengaturan</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#" class="sidebar-link logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="dashboard-content">
+            
+            <header class="dashboard-header">
+                <h2>Notifikasi</h2>
+                <p>Semua pengingat dan pembaruan terkait kesehatan gigi anak</p>
+            </header>
+
+            <section class="notif-summary-grid">
+                <div class="notif-card card-pink">
+                    <div class="notif-card-header">
+                        <span>Perhatian</span>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="notif-card-value">1</div>
+                </div>
+
+                <div class="notif-card card-yellow">
+                    <div class="notif-card-header">
+                        <span>Pengingat</span>
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div class="notif-card-value">1</div>
+                </div>
+
+                <div class="notif-card card-blue">
+                    <div class="notif-card-header">
+                        <span>Info</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <div class="notif-card-value">0</div>
+                </div>
+
+                <div class="notif-card card-grey">
+                    <div class="notif-card-header">
+                        <span>Belum dibaca</span>
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+                    <div class="notif-card-value">2</div>
+                </div>
+            </section>
+
+            <section class="notification-list-section">
+                
+                <div class="notif-item">
+                    <div class="notif-icon-box icon-pink">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-top">
+                            <h3 class="notif-title">Perhatian: Gigi Terlambat Tumbuh</h3>
+                            <span class="notif-time">2 jam yang lalu</span>
+                        </div>
+                        <p class="notif-desc">Gigi samping kiri (bawah) Aisyah belum tumbuh di usia yang seharusnya. Pertimbangkan untuk konsultasi dengan dokter gigi.</p>
+                        <div class="notif-actions">
+                            <button class="btn btn-primary">Konsultasi</button>
+                            <button class="btn btn-outline" onclick="tandaiDibaca(this)">Tandai sudah dibaca</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notif-item">
+                    <div class="notif-icon-box icon-yellow">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-top">
+                            <h3 class="notif-title">Waktu Sikat Gigi Malam</h3>
+                            <span class="notif-time">1 hari yang lalu</span>
+                        </div>
+                        <p class="notif-desc">Jangan lupa sikat gigi malam Salma sebelum tidur!</p>
+                        <div class="notif-actions">
+                            <button class="btn btn-outline" onclick="tandaiDibaca(this)">Tandai sudah dibaca</button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

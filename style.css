@@ -1,0 +1,116 @@
+  /* ========================================= */
+        /* 1. CSS GLOBAL (Sidebar & Layout Utama)    */
+        /* ========================================= */
+        :root {
+            --primary-blue: #3a6bda;
+            --primary-hover: #2c5cb6;
+            --text-dark: #333;
+            --text-grey: #64748B;
+            --bg-body: #fdfdfd;
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+        }
+
+        /* Layout Utama */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR STYLE --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #ffffff;
+            border-right: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            top: 0; left: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark); /* Logo Hitam/Biru */
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        /* Ikon Gigi di Logo */
+        .sidebar-logo i {
+            color: var(--primary-blue);
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-nav ul, .sidebar-footer ul {
+            list-style: none; /* Menghilangkan titik bullet */
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-grey);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-link i {
+            font-size: 1.2rem;
+            margin-right: 14px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Hover & Active State */
+        .sidebar-link:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-blue);
+        }
+
+        .sidebar-link.active {
+            background-color: #ebf1ff; /* Background Biru Muda */
+            color: var(--primary-blue); /* Teks Biru */
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+        
+        .sidebar-link.logout:hover {
+            background-color: #fff0f0;
+            color: #d93030;
+        }
+
+        /* --- KONTEN UTAMA --- */
+        .dashboard-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .dashboard-header { margin-bottom: 30px; }
+        .dashboard-header h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .dashboard-header p { color: var(--text-grey); font-size: 15px; }
