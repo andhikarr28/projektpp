@@ -81,6 +81,96 @@ body{
 .btn-secondary:hover {
     background-color: #EEE;
 }
+.btn-outline {
+    background-color: #fff;
+    color: #4a80ff;
+    border: 1px solid #d6e3ff;
+}
+.btn-outline:hover {
+    background-color: #ebf1ff;
+}
+
+/* ========================================= */
+/* Auth (Login/Register)                     */
+/* ========================================= */
+.auth-body {
+    background: linear-gradient(135deg, #e7f0ff 0%, #f7fbff 60%, #ffffff 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.auth-wrapper {
+    width: min(1080px, 100%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+.auth-aside {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid #e4e9f2;
+    box-shadow: 0 10px 30px rgba(39, 60, 117, 0.08);
+}
+.brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #e6f0ff;
+    color: #3b6ce1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.brand-title {
+    font-weight: 700;
+    color: #1f2b3d;
+    font-size: 1.1rem;
+}
+.brand-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+.auth-aside h1 {
+    font-size: 1.9rem;
+    margin: 10px 0 8px;
+    color: #1f2b3d;
+}
+.aside-text {
+    color: #556070;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+.aside-list {
+    padding-left: 18px;
+    color: #42526b;
+    line-height: 1.6;
+}
+.auth-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid #e4e9f2;
+    box-shadow: 0 10px 30px rgba(39, 60, 117, 0.08);
+}
+.auth-card-header h2 {
+    margin: 0;
+    color: #1f2b3d;
+}
+.auth-card-header p {
+    margin: 6px 0 14px;
+    color: #6b7280;
+}
 
 /* ========================================= */
 /* 3. Hero Section                           */
@@ -272,6 +362,20 @@ body{
 .form-footer-text a:hover {
     text-decoration: underline;
 }
+.form-status {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #555;
+}
+.form-status.success {
+    color: #0f9d58;
+}
+
+.settings-separator {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 10px 0 20px 0;
+}
 
 /* ========================================= */
 /* 6. Dashboard Layout                       */
@@ -360,6 +464,25 @@ body{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.child-label {
+    font-weight: 600;
+    color: #555;
+}
+.child-select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d8deea;
+    font-family: inherit;
+}
+.child-add-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
 }
 .header-left h2 {
     margin: 0 0 5px 0;
@@ -513,55 +636,57 @@ body{
 .chat-container {
     display: flex;
     height: calc(100vh - 140px); /* Mengisi sisa tinggi layar */
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, #f8fbff 0%, #fefefe 40%, #f9f9ff 100%);
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
     overflow: hidden;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e6ecf5;
 }
 
 /* --- Sisi Kiri: Daftar Kontak --- */
 .chat-sidebar-area {
     width: 300px;
-    background: #f8f9fa;
+    background: #f5f7fb;
     border-right: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
 }
 
 .chat-sidebar-header {
-    padding: 20px;
-    background: #fff;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #4a80ff, #5cb8ff);
+    border-bottom: 1px solid #d9e6ff;
     font-weight: 700;
-    color: #4a80ff;
+    color: #fff;
 }
 
 .contact-list {
     overflow-y: auto;
     flex-grow: 1;
+    background: #f9fbff;
 }
 
 .contact-item {
     padding: 15px 20px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #eef2fb;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.contact-item:hover { background: #eef2ff; }
-.contact-item.active { background: #e0e7ff; border-left: 4px solid #4a80ff; }
+.contact-item:hover { background: #eef4ff; transform: translateX(2px); }
+.contact-item.active { background: #e0e9ff; border-left: 4px solid #4a80ff; }
 
 .contact-avatar {
     width: 40px; height: 40px;
-    background: #ddd; border-radius: 50%;
+    background: linear-gradient(135deg, #d0e4ff, #d8ffe5); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     color: #555;
     flex-shrink: 0;
 }
+
 
 /* --- Sisi Kanan: Jendela Chat --- */
 .chat-main-area {
@@ -576,6 +701,9 @@ body{
     border-bottom: 1px solid #eee;
     background: #fff;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .chat-messages {
@@ -590,9 +718,11 @@ body{
 
 /* Bubble Chat Styles */
 .message-row { display: flex; flex-direction: column; margin-bottom: 10px; }
+.message-row.doctor-row { align-items: flex-start; }
+.message-row.parent-row { align-items: flex-end; }
 
-/* Pertanyaan Orang Tua (Kiri) */
-.msg-bubble.parent {
+/* Dokter (Kiri) */
+.msg-bubble.doctor {
     align-self: flex-start;
     background: #ffffff;
     border: 1px solid #ddd;
@@ -603,8 +733,8 @@ body{
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 
-/* Jawaban Dokter (Kanan) */
-.msg-bubble.doctor {
+/* Orang Tua / User (Kanan) */
+.msg-bubble.parent {
     align-self: flex-end;
     background: #d1e7dd; /* Hijau muda ala WA */
     color: #0f5132;
@@ -618,27 +748,76 @@ body{
 /* Kotak Input Balasan (Langsung di chat) */
 .reply-box {
     margin-top: 8px;
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ffd700;
-    border-radius: 8px;
+    padding: 12px;
+    background: #f9fbff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    align-self: flex-start; /* Sejajar dengan pertanyaan */
-    width: 80%;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+    box-sizing: border-box;
 }
 
 .reply-box textarea {
-    width: 100%; border: 1px solid #eee;
-    border-radius: 5px; padding: 8px;
+    width: 100%; border: 1px solid #d8deea;
+    border-radius: 10px; padding: 10px 12px;
     resize: vertical;
     box-sizing: border-box;
     font-family: inherit;
+}
+
+.reply-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.photo-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f5f8ff;
+    border: 1px dashed #4a80ff;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #4a80ff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.photo-upload-label:hover {
+    background: #eaf1ff;
 }
 
 .empty-chat-state {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     height: 100%; color: #aaa;
+}
+
+.msg-image img {
+    max-width: 260px;
+    border-radius: 12px;
+    display: block;
+}
+
+/* --- Navigasi Halaman --- */
+.page-content {
+    display: none;
+    opacity: 0;
+}
+.page-content.active {
+    display: block;
+    animation: fadeIn 0.35s ease;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
 }

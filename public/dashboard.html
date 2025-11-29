@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigiKecil Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="warna.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <aside id="sidebar-placeholder" data-active="dashboard.html"></aside>
+
+        <main class="dashboard-content main-content">
+    
+            <div id="dashboard" class="page-content active">
+                <header>
+                    <div class="header-text">
+                        <h1>Dashboard</h1>
+                        <p>
+                            <span id="namaAnakHeader"></span> -
+                            <span id="umurAnakHeader"></span>
+                        </p>
+                    </div>
+
+                    <div class="user-profile">
+                        <div class="avatar-icon"><i class="fa-solid fa-baby"></i></div>
+                        <span id="namaAnakProfile"></span>
+
+                        <i class="fa-solid fa-chevron-down profile-arrow" id="profileArrow"></i>
+
+                        <!-- Dropdown -->
+                        <div class="child-menu" id="childMenu"></div>
+                    </div>
+                </header>
+
+                <section class="stats-grid">
+                    <div class="card blue">
+                        <div class="icon-circle"><i class="fa-solid fa-tooth"></i></div>
+                        <div class="card-info"><h3 id="stat-total">20</h3><p>Total Gigi Susu</p></div>
+                    </div>
+                    <div class="card green">
+                        <div class="icon-circle"><i class="fa-solid fa-tooth"></i></div>
+                        <div class="card-info"><h3 id="stat-tumbuh">0</h3><p>Sudah Tumbuh</p></div>
+                    </div>
+                    <div class="card red">
+                        <div class="icon-circle"><i class="fa-solid fa-tooth"></i></div>
+                        <div class="card-info"><h3 id="stat-copot">0</h3><p>Sudah Copot</p></div>
+                    </div>
+                    <div class="card grey">
+                        <div class="icon-circle"><i class="fa-solid fa-tooth"></i></div>
+                        <div class="card-info"><h3 id="stat-belum">20</h3><p>Belum Tumbuh</p></div>
+                    </div>
+                </section>
+
+                <section class="tooth-map-container">
+                    <div class="map-header">
+                        <h3>Peta Gigi Interaktif</h3>
+                        <p>Klik pada gigi untuk update status</p>
+                    </div>
+                    
+                    <div class="jaw-section">
+                        <h4>Rahang Atas</h4>
+                        <div class="gum upper-gum">
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kiri" 
+                                data-nama="Geraham Belakang"
+                                data-tooltip-text="Geraham Belakang Atas Kiri">10
+                                <div class="tooltip tooltip-top">Geraham Belakang<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kiri" 
+                                data-nama="Geraham Depan"
+                                data-tooltip-text="Geraham Depan Atas Kiri">5
+                                <div class="tooltip tooltip-top">Geraham Depan<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kiri" 
+                                data-nama="Taring"
+                                data-tooltip-text="Taring Atas Kiri">7
+                                <div class="tooltip tooltip-top">Taring<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kiri" 
+                                data-nama="Seri Samping"
+                                data-tooltip-text="Seri Samping Atas Kiri">3
+                                <div class="tooltip tooltip-top">Seri Samping<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kiri" 
+                                data-nama="Seri Tengah"
+                                data-tooltip-text="Seri Tengah Atas Kiri">2
+                                <div class="tooltip tooltip-top">Seri Tengah<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth-gap"></div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kanan" 
+                                data-nama="Seri Tengah"
+                                data-tooltip-text="Seri Tengah Atas Kanan">2
+                                <div class="tooltip tooltip-top">Seri Tengah<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kanan" 
+                                data-nama="Seri Samping"
+                                data-tooltip-text="Seri Samping Atas Kanan">3
+                                <div class="tooltip tooltip-top">Seri Samping<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Atas Kanan"
+                                data-nama="Taring"
+                                data-tooltip-text="Taring Atas Kanan">7
+                                <div class="tooltip tooltip-top">Taring<div class="tooltip-arrow"></div></div>
+                            </div>
+
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kanan" 
+                                data-nama="Geraham Depan"
+                                data-tooltip-text="Geraham Depan Atas Kanan">5
+                                <div class="tooltip tooltip-top">Geraham Depan<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container" 
+                                data-posisi="Atas Kanan" 
+                                data-nama="Geraham Belakang"
+                                data-tooltip-text="Geraham Belakang Atas Kanan">10
+                                <div class="tooltip tooltip-top">Geraham Belakang<div class="tooltip-arrow"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                        <div class="jaw-section">
+                            <div class="gum lower-gum">
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kiri"
+                                data-nama="Geraham Belakang"
+                                data-tooltip-text="Geraham Belakang Bawah Kiri">9
+                                <div class="tooltip tooltip">Geraham Belakang<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kiri"
+                                data-nama="Geraham Depan"
+                                data-tooltip-text="Geraham Depan Bawah Kiri">6
+                                <div class="tooltip tooltip">Geraham Depan<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kiri"
+                                data-nama="Taring"
+                                data-tooltip-text="Taring Bawah Kiri">8
+                                <div class="tooltip tooltip">Taring<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kiri"
+                                data-nama="Seri Samping"
+                                data-tooltip-text="Seri Samping Bawah Kiri">4
+                                <div class="tooltip tooltip">Seri Samping<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kiri"
+                                data-nama="Seri Tengah"
+                                data-tooltip-text="Seri Tengah Bawah Kiri">1
+                                <div class="tooltip tooltip">Seri Tengah<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth-gap"></div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kanan"
+                                data-nama="Seri Tengah"
+                                data-tooltip-text="Seri Tengah Bawah Kanan">1
+                                <div class="tooltip tooltip">Seri Tengah<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kanan"
+                                data-nama="Seri Samping"
+                                data-tooltip-text="Seri Samping Bawah Kanan">4
+                                <div class="tooltip tooltip">Seri Samping<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kanan"
+                                data-nama="Taring"
+                                data-tooltip-text="Taring Bawah Kanan">8
+                                <div class="tooltip tooltip">Taring<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kanan"
+                                data-nama="Geraham Depan"
+                                data-tooltip-text="Geraham Depan Bawah Kanan">6
+                                <div class="tooltip tooltip">Geraham Depan<div class="tooltip-arrow"></div></div>
+                            </div>
+                            
+                            <div class="tooth tooltip-container"
+                                data-posisi="Bawah Kanan"
+                                data-nama="Geraham Belakang"
+                                data-tooltip-text="Geraham Belakang Bawah Kanan">9
+                                <div class="tooltip tooltip">Geraham Belakang<div class="tooltip-arrow"></div></div>
+                            </div>
+                        </div>
+                        <h4>Rahang Bawah</h4>
+                    </div>
+                </section>
+            </div>
+
+            <div id="catatan" class="page-content">
+                <header>
+                    <div class="header-text">
+                        <h1>Riwayat Perkembangan Gigi</h1>
+                        <p>Pantau perkembangan gigi si kecil</p>
+                    </div>
+                </header>
+
+                <div class="table-container">
+                    <div class="table-filter">
+                        <span><i class="fa-solid fa-filter"></i> Filter:</span>
+                        <button class="badge badge-grey">Semua</button>
+                        <button class="badge badge-pink">Salma</button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Anak</th>
+                                <th>Gigi</th>
+                                <th>Status</th>
+                                <th>Usia</th>
+                                <th>Analisis</th> <th>Catatan</th>
+                                <th>Aksi</th> </tr>
+                        </thead>
+                        <tbody id="catatan-body">
+                            </tbody>
+                    </table>
+                    
+                    <div id="empty-message" class="empty-table-msg">
+                        Belum ada data tercatat. Silakan update gigi di Dashboard.
+                    </div>
+                </div>
+            </div>
+
+            <div id="edukasi" class="page-content"><div class="empty-state"><h3>Halaman Edukasi</h3></div></div>
+            <div id="klinik" class="page-content"><div class="empty-state"><h3>Halaman Klinik</h3></div></div>
+            <div id="notifikasi" class="page-content"><div class="empty-state"><h3>Halaman Notifikasi</h3></div></div>
+            <div id="pengaturan" class="page-content"><div class="empty-state"><h3>Halaman Pengaturan</h3></div></div>
+
+        </main>
+    </div>
+
+    <div id="toothModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Update Status Gigi</h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="toothForm" onsubmit="saveToothData(event)">
+                    <div class="form-group">
+                        <label>Posisi Gigi</label>
+                        <input type="text" id="inputPosisi" readonly class="readonly-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tanggal Pencatatan</label>
+                        <input type="date" id="inputTanggal" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="inputStatus">
+                            <option value="tumbuh">Sudah Tumbuh</option>
+                            <option value="copot">Sudah Copot</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catatan Tambahan</label>
+                        <textarea id="inputCatatan" rows="3" placeholder="Contoh: Anak agak demam..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="save-btn">Simpan Data</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="savedPopup" class="saved-popup">
+        <div class="popup-box">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Data berhasil disimpan!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - Gigi Kecil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside id="sidebar-placeholder" data-active="pengaturan.html"></aside>
+
+        <main class="dashboard-content">
+            <header class="dashboard-header">
+                <div>
+                    <h2>Pengaturan</h2>
+                    <p>Kelola profil dan informasi akun Anda.</p>
+                </div>
+            </header>
+
+            <section class="form-container" style="max-width:640px;">
+                <h3 style="text-align:left; margin-top:0;">Profil & Keamanan</h3>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="profileName">Nama</label>
+                        <input type="text" id="profileName" name="name" placeholder="Nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileEmail">Email</label>
+                        <input type="email" id="profileEmail" name="email" placeholder="Email" readonly>
+                        <small style="color:#777;">Email tidak dapat diubah pada versi demo.</small>
+                    </div>
+                    <hr class="settings-separator">
+                    <div class="form-group">
+                        <label for="oldPassword">Password Saat Ini</label>
+                        <input type="password" id="oldPassword" placeholder="Password lama">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password Baru</label>
+                        <input type="password" id="newPassword" placeholder="Minimal 6 karakter">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmPassword" placeholder="Ulangi password baru">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Simpan Perubahan</button>
+                    <div id="profileStatus" class="form-status" aria-live="polite"></div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konsultasi - Gigi Kecil</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside id="sidebar-placeholder"></aside>
+
+        <main class="dashboard-content">
+            
+            <div class="dashboard-header">
+                <div class="header-left">
+                    <h2>Konsultasi</h2>
+                </div>
+                <div class="header-right" style="display:none;">
+                    <label for="childSelect" class="child-label">Anak:</label>
+                    <select id="childSelect" class="child-select"></select>
+                </div>
+            </div>
+
+            <section id="chat-section" style="margin-top: 30px;">
+                <div class="chat-container">
+                    <div class="chat-sidebar-area">
+                        <div class="chat-sidebar-header" id="sidebarTitle">Dokter Pilihan</div>
+                        <div class="contact-list" id="contactList"></div>
+                    </div>
+
+                    <div class="chat-main-area">
+                        <div class="chat-header">
+                            <div id="chatDoctorName">Pilih kontak untuk mulai chat</div>
+                            <div class="child-badge" id="childBadge">Belum pilih anak</div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="empty-chat-state">Belum ada percakapan.</div>
+                        </div>
+                        <div class="reply-box">
+                            <textarea id="replyBox" rows="3" placeholder="Tulis pesan Anda..." disabled></textarea>
+                            <div class="reply-actions">
+                                <label class="photo-upload-label">
+                                    <span>📷 Tambah Foto</span>
+                                    <input type="file" id="photoInput" accept="image/*" hidden>
+                                </label>
+                                <button class="btn btn-primary" id="sendBtn" disabled>Kirim</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        var doctors = [];
+        var chats = [];
+        var contacts = [];
+        var currentChat = null;
+        var currentUser = null;
+        var isDoctor = false;
+
+        var contactList = document.getElementById('contactList');
+        var chatDoctorName = document.getElementById('chatDoctorName');
+        var chatMessages = document.getElementById('chatMessages');
+        var replyBox = document.getElementById('replyBox');
+        var sendBtn = document.getElementById('sendBtn');
+        var photoInput = document.getElementById('photoInput');
+        var sidebarPlaceholder = document.getElementById('sidebar-placeholder');
+        var childSelect = document.getElementById('childSelect');
+        var childBadge = document.getElementById('childBadge');
+        var headerRight = document.querySelector('.header-right');
+        var sidebarTitle = document.getElementById('sidebarTitle');
+        var children = [];
+        var activeChild = null;
+
+        // Load current user
+        try {
+            currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+            isDoctor = currentUser && currentUser.role === 'doctor';
+        } catch (e) {
+            currentUser = null;
+            isDoctor = false;
+        }
+
+        // Muat sidebar
+        fetch('navbar.html')
+            .then(function (response) { return response.text(); })
+            .then(function (html) {
+                sidebarPlaceholder.innerHTML = html;
+                setActiveSidebarLink('konsultasi.html');
+                filterSidebarByRole();
+            })
+            .catch(function () {
+                sidebarPlaceholder.innerHTML = '<p>Gagal memuat navigasi.</p>';
+            });
+
+        function setActiveSidebarLink(pageName) {
+            var links = sidebarPlaceholder.querySelectorAll('.sidebar-link');
+            links.forEach(function (link) {
+                var page = link.getAttribute('data-page');
+                link.classList.toggle('active', page === pageName);
+            });
+        }
+
+        function ensureLoggedIn() {
+            if (currentUser) return true;
+            alert('Silakan login untuk memulai chat.');
+            window.location.href = 'masuk.html';
+            return false;
+        }
+
+        function filterSidebarByRole() {
+            if (!isDoctor) {
+                if (headerRight) headerRight.style.display = 'flex';
+                return;
+            }
+            // Dokter: sembunyikan menu selain konsultasi + logout (dokter tidak memulai chat)
+            sidebarPlaceholder.querySelectorAll('.sidebar-link').forEach(function (link) {
+                if (link.classList.contains('logout')) return;
+                var page = link.getAttribute('data-page');
+                if (page && page !== 'konsultasi.html') {
+                    var li = link.closest('li');
+                    if (li) li.style.display = 'none';
+                }
+            });
+            if (headerRight) headerRight.style.display = 'none';
+        }
+
+        // Anak di localStorage (kompatibel dengan format baru dan lama)
+        function ageYears(dateStr) {
+            if (!dateStr) return '';
+            var d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '';
+            var now = new Date();
+            var years = now.getFullYear() - d.getFullYear();
+            var md = now.getMonth() - d.getMonth();
+            var dd = now.getDate() - d.getDate();
+            if (md < 0 || (md === 0 && dd < 0)) years--;
+            return years < 0 ? '0' : String(years);
+        }
+
+        function loadChildren() {
+            var raw = localStorage.getItem('children') || localStorage.getItem('anakList');
+            if (!raw) {
+                children = [];
+                return;
+            }
+            try {
+                var parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed)) { children = []; return; }
+                children = parsed.map(function (c, idx) {
+                    var usiaVal = c.usia || ageYears(c.tanggalLahir);
+                    return {
+                        id: c.id || Date.now() + idx,
+                        nama: c.nama || c.name || 'Anak',
+                        usia: usiaVal,
+                        tanggalLahir: c.tanggalLahir || '',
+                        catatan: c.catatan || ''
+                    };
+                });
+            } catch (e) {
+                children = [];
+            }
+        }
+
+        function renderChildren() {
+            if (isDoctor) {
+                childBadge.textContent = 'Mode Dokter';
+                if (sidebarTitle) sidebarTitle.textContent = 'Anak (Pasien)';
+                return;
+            }
+            loadChildren();
+            if (children.length === 0) {
+                childSelect.innerHTML = '<option value="">Belum ada anak</option>';
+                activeChild = null;
+                childBadge.textContent = 'Belum pilih anak';
+                replyBox.disabled = true;
+                sendBtn.disabled = true;
+                return;
+            }
+            childSelect.innerHTML = '';
+            children.forEach(function (child, idx) {
+                var usiaLabel = child.usia || ageYears(child.tanggalLahir);
+                var opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = usiaLabel ? (child.nama + ' (Usia ' + usiaLabel + ')') : child.nama;
+                childSelect.appendChild(opt);
+            });
+            activeChild = children[0];
+            childSelect.value = 0;
+            childBadge.textContent = activeChild.nama;
+            replyBox.disabled = false;
+            sendBtn.disabled = false;
+            if (sidebarTitle) sidebarTitle.textContent = 'Dokter Pilihan';
+        }
+
+        childSelect.addEventListener('change', function () {
+            var idx = parseInt(this.value, 10);
+            activeChild = children[idx] || null;
+            childBadge.textContent = activeChild ? activeChild.nama : 'Belum pilih anak';
+        });
+
+        function setActiveContact(element) {
+            if (!contactList) return;
+            contactList.querySelectorAll('.contact-item').forEach(function (item) {
+                item.classList.remove('active');
+            });
+            if (element) element.classList.add('active');
+        }
+
+        // Kontak list
+        function renderContacts(list, mode) {
+            contactList.innerHTML = '';
+            if (!list || list.length === 0) {
+                var empty = document.createElement('div');
+                empty.className = 'contact-item';
+                empty.innerHTML = '<div><strong>Belum ada data.</strong><br><small>' + (isDoctor ? 'Belum ada pasien.' : 'Tambah anak & pilih dokter.') + '</small></div>';
+                contactList.appendChild(empty);
+                return;
+            }
+            // Deduplikasi sisi UI (contoh: dokter melihat daftar pasien)
+            var rendered = new Map();
+            list.forEach(function (item, index) {
+                var uniqKey;
+                var name, status, clickHandler;
+                if (mode === 'doctor') {
+                    uniqKey = 'doctor:' + (item.id || item.email || item.name);
+                    name = item.name;
+                    status = item.status || 'Tersedia';
+                    clickHandler = function () {
+                        setActiveContact(div);
+                        startUserChat(item);
+                    };
+                } else { // mode 'chat' untuk dokter
+                    uniqKey = 'chat:' + (item.user_id || '') + ':' + (item.child_name || '').trim().toLowerCase();
+                    name = item.child_name || item.user_name || 'Pasien';
+                    status = item.user_name ? ('Ortu: ' + item.user_name) : 'Pasien';
+                    clickHandler = function () {
+                        setActiveContact(div);
+                        openExistingChat(item);
+                    };
+                }
+                if (rendered.has(uniqKey)) return;
+                rendered.set(uniqKey, true);
+                var div = document.createElement('div');
+                div.className = 'contact-item';
+                div.innerHTML = '<div class="contact-avatar">' + name.charAt(0) + '</div>' +
+                    '<div><strong>' + name + '</strong><br><small>' + status + '</small></div>';
+                div.addEventListener('click', clickHandler);
+                contactList.appendChild(div);
+                if (index === 0) {
+                    div.classList.add('active');
+                }
+            });
+        }
+
+        async function startUserChat(doctor) {
+            if (!ensureLoggedIn()) return;
+
+            if (!activeChild) {
+                loadChildren();
+                activeChild = children[0] || null;
+                if (!activeChild) {
+                    // Boleh lanjut tanpa nama anak, tapi tandai di badge
+                    childBadge.textContent = 'Tanpa data anak';
+                }
+            }
+            var payload = {
+                doctor_id: doctor.id,
+                user_id: currentUser.id,
+                initiated_by: 'user',
+                child_name: activeChild ? activeChild.nama : null
+            };
+            try {
+                var res = await fetch('/api/chats/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                var data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || 'Gagal memulai chat');
+                }
+                currentChat = {
+                    id: data.id,
+                    doctorId: doctor.id,
+                    doctorName: doctor.name,
+                    userId: currentUser.id,
+                    userName: currentUser.name,
+                    childName: data.child_name || (activeChild ? activeChild.nama : null)
+                };
+                setChatHeader();
+                loadMessages(data.id);
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function openExistingChat(chat) {
+            currentChat = {
+                id: chat.id,
+                doctorId: chat.doctor_id,
+                doctorName: chat.doctor_name,
+                userId: chat.user_id,
+                userName: chat.user_name,
+                childName: chat.child_name || chat.user_name
+            };
+            childBadge.textContent = currentChat.childName || 'Pasien';
+            setChatHeader();
+            loadMessages(chat.id);
+        }
+
+        function setChatHeader() {
+            if (!currentChat) return;
+            var childLabel = currentChat.childName || 'Tanpa data anak';
+            chatDoctorName.textContent = currentChat.doctorName
+                ? ('Chat dengan ' + currentChat.doctorName)
+                : 'Chat aktif';
+            childBadge.textContent = (isDoctor ? 'Pasien: ' : 'Anak: ') + childLabel;
+        }
+
+        function loadMessages(chatId) {
+            fetch('/api/chats/' + chatId + '/messages')
+                .then(function (res) { return res.json(); })
+                .then(function (msgs) {
+                    chatMessages.innerHTML = '';
+                    if (!msgs || msgs.length === 0) {
+                        chatMessages.innerHTML = '<div class="empty-chat-state">Belum ada pesan.</div>';
+                        replyBox.disabled = false;
+                        sendBtn.disabled = false;
+                        return;
+                    }
+                    msgs.forEach(function (msg) {
+                        appendMessage(msg);
+                    });
+                    replyBox.disabled = false;
+                    sendBtn.disabled = false;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(function () {
+                    chatMessages.innerHTML = '<div class="empty-chat-state">Gagal memuat pesan.</div>';
+                });
+        }
+
+        function appendMessage(msg) {
+            if (!currentChat) return;
+            var isDoctorMsg = msg.sender_id === currentChat.doctorId;
+            var bubbleClass = isDoctorMsg ? 'doctor' : 'parent';
+            var rowClass = isDoctorMsg ? 'doctor-row' : 'parent-row';
+            var row = document.createElement('div');
+            row.className = 'message-row ' + rowClass;
+            row.innerHTML = '<div class="msg-bubble ' + bubbleClass + '">' + escapeHtml(msg.body) + '</div>';
+            chatMessages.appendChild(row);
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        function sendMessage() {
+            if (!currentChat) {
+                alert('Pilih chat dulu.');
+                return;
+            }
+            var body = replyBox.value.trim();
+            if (!body) return;
+            var payload = {
+                sender_id: currentUser ? currentUser.id : null,
+                body: body
+            };
+            fetch('/api/chats/' + currentChat.id + '/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+                .then(function (resp) {
+                    if (!resp.ok) throw new Error(resp.data.error || 'Gagal mengirim pesan');
+                    appendMessage({
+                        sender_id: payload.sender_id,
+                        body: body
+                    });
+                    replyBox.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(function (err) {
+                    alert(err.message);
+                });
+        }
+
+        sendBtn.addEventListener('click', function () {
+            sendMessage();
+        });
+
+        replyBox.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        photoInput.addEventListener('change', function () {
+            if (!photoInput.files || !photoInput.files[0]) return;
+            var file = photoInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                if (!currentChat) {
+                    alert('Pilih chat dulu.');
+                    return;
+                }
+                var payload = {
+                    sender_id: currentUser ? currentUser.id : null,
+                    body: '[foto] ' + (activeChild ? activeChild.nama : '')
+                };
+                // Kirim pesan teks penanda foto (gambar tidak diupload ke server di demo ini)
+                fetch('/api/chats/' + currentChat.id + '/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(function () {});
+
+                var row = document.createElement('div');
+                row.className = 'message-row parent-row';
+                var caption = activeChild ? '<div style="font-size:12px;color:#555;margin-bottom:6px;">Foto ' + activeChild.nama + '</div>' : '';
+                row.innerHTML = '<div class="msg-bubble parent msg-image">' + caption + '<img src="' + e.target.result + '" alt="Foto konsultasi"></div>';
+                chatMessages.appendChild(row);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+            reader.readAsDataURL(file);
+            photoInput.value = '';
+        });
+
+        function fetchDoctors() {
+            if (isDoctor) {
+                // dokter tidak memulai chat; daftar chat diambil terpisah
+                return;
+            }
+            fetch('/api/doctors')
+                .then(function (response) {
+                    if (!response.ok) throw new Error('Failed fetch doctors');
+                    return response.json();
+                })
+                .then(function (data) {
+                    var unique = new Map();
+                    data.forEach(function (row) {
+                        var key = (row.email || row.name || row.id).toString().toLowerCase();
+                        if (unique.has(key)) return;
+                        unique.set(key, {
+                            id: row.id,
+                            name: row.name,
+                            status: 'Tersedia sekarang'
+                        });
+                    });
+                    doctors = Array.from(unique.values());
+                    contacts = doctors;
+                    renderContacts(contacts, 'doctor');
+                    renderChildren();
+                })
+                .catch(function () {
+                    doctors = [
+                        { id: 1, name: 'drg. Aulia', status: 'Tersedia sekarang' },
+                        { id: 2, name: 'drg. Bima', status: 'Online dalam 10 menit' },
+                        { id: 3, name: 'drg. Clara', status: 'Tersedia sekarang' }
+                    ];
+                    contacts = doctors;
+                    renderContacts(contacts, 'doctor');
+                    renderChildren();
+                });
+        }
+
+        function fetchChatsForDoctor() {
+            if (!currentUser) {
+                alert('Silakan login sebagai dokter.');
+                return;
+            }
+            fetch('/api/chats?doctor_id=' + currentUser.id)
+                .then(function (res) {
+                    if (!res.ok) throw new Error('Gagal mengambil chat');
+                    return res.json();
+                })
+                .then(function (data) {
+                    chats = data;
+                    contacts = chats;
+                    renderContacts(contacts, 'chat');
+                    childBadge.textContent = 'Mode Dokter';
+                })
+                .catch(function () {
+                    contactList.innerHTML = '<div class="contact-item"><div><strong>Tidak ada chat.</strong></div></div>';
+                });
+        }
+
+        if (isDoctor) {
+            renderChildren();
+            fetchChatsForDoctor();
+        } else {
+            renderChildren();
+            fetchDoctors();
+        }
+    </script>
+</body>
+</html>
